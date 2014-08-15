@@ -35,8 +35,8 @@ void print_arr(int arr[], int length)
  */
 void bucket_sort(int arr[], int length, int range_start, int range_end)
 {
-    if (range_end < range_start)
-    {
+    if (range_end <= range_start)
+    {   //区间范围错误
         return;
     }
     int i;
@@ -52,6 +52,12 @@ void bucket_sort(int arr[], int length, int range_start, int range_end)
     // push all value into buckets, O(n)
     for (i = 0; i < length; i++)
     {
+        if (arr[i] < range_start || arr[i] >= range_end)
+        {
+            //存在不合法的输入，停止执行
+            //区间范围外的输入会导致数组越界
+            return;
+        }
         //index = value - range_start
         buckets[arr[i] - range_start] += 1;
     }
@@ -74,7 +80,7 @@ void bucket_sort(int arr[], int length, int range_start, int range_end)
 
 int main()
 {
-    const int LEN = 100000;
+    const int LEN = 100000000;
     int i;
     int* arr = (int*)malloc(sizeof(int) * LEN);
     int input_range_start = 0;
